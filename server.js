@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 
 const app = express();
 
@@ -7,45 +6,48 @@ const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 
-// MongoDB Connection (LOCAL)
-mongoose.connect("mongodb://127.0.0.1:27017/leaveDB")
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
-
-// Schema
-const leaveSchema = new mongoose.Schema({
-    name: String,
-    reason: String,
-    fromDate: String,
-    toDate: String,
-    status: { type: String, default: "Pending" }
-});
-
-const Leave = mongoose.model("Leave", leaveSchema);
+// Temporary storage (no MongoDB)
+let leaves = [];
 
 // Apply Leave
-app.post("/api/apply", async (req, res) => {
-    const leave = new Leave(req.body);
-    await leave.save();
+app.post("/api/apply", (req, res) => {
+    const newLeave = {
+        _id: Date.now().toString(),
+        name: req.body.name,
+        reason: req.body.reason,
+        fromDate: req.body.fromDate,
+        toDate: req.body.toDate,
+        status: "Pending"
+    };
+
+    leaves.push(newLeave);
+
     res.send("Leave Applied");
 });
 
-// Get Leaves
-app.get("/api/leaves", async (req, res) => {
-    const data = await Leave.find();
-    res.json(data);
+// Get All Leaves
+app.get("/api/leaves", (req, res) => {
+    res.json(leaves);
 });
 
-// Update Status
-app.post("/api/update/:id", async (req, res) => {
-    await Leave.findByIdAndUpdate(req.params.id, {
-        status: req.body.status
+// Update Leave Status
+app.post("/api/update/:id", (req, res) => {
+    const id = req.params.id;
+    const status = req.body.status;
+
+    leaves = leaves.map(l => {
+        if (l._id === id) {
+            return { ...l, status: status };
+        }
+        return l;
     });
-    res.send("Updated");
+
+    res.send("Status Updated");
 });
 
-// Start Server
-const PORT = 3000;
+// Start Server (IMPORTANT for Render)
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-    console.log("Server running on port 3000");
+    console.log("Server running on port " + PORT);
 });
