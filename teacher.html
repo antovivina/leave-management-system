@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+            background: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+        }
+
+        button {
+            padding: 8px;
+            margin: 5px;
+            border: none;
+            color: white;
+        }
+
+        .approve { background: green; }
+        .reject { background: red; }
+
+        p {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Teacher Panel</h2>
+<div id="list"></div>
+
+</div>
+
+<script>
+
+async function load() {
+    const res = await fetch("/api/leaves");
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(l => {
+        html += `
+        <p>
+        ${l.name} - ${l.reason} - ${l.status}<br>
+        <button class="approve" onclick="update('${l._id}','Approved')">Approve</button>
+        <button class="reject" onclick="update('${l._id}','Rejected')">Reject</button>
+        </p>`;
+    });
+
+    document.getElementById("list").innerHTML = html;
+}
+
+async function update(id, status) {
+    await fetch("/api/update/" + id, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({status})
+    });
+
+    load();
+}
+
+load();
+
+</script>
+
+</body>
+</html>
