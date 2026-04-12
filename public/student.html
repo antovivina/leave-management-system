@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+            background: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 8px;
+            width: 200px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Student Panel</h2>
+
+<input id="name" placeholder="Name"><br>
+<input id="reason" placeholder="Reason"><br>
+<input type="date" id="fromDate"><br>
+<input type="date" id="toDate"><br>
+
+<button onclick="applyLeave()">Apply Leave</button>
+
+<h3>Check Status</h3>
+<button onclick="load()">View My Leaves</button>
+
+<div id="list"></div>
+
+</div>
+
+<script>
+
+async function applyLeave() {
+    const data = {
+        name: document.getElementById("name").value,
+        reason: document.getElementById("reason").value,
+        fromDate: document.getElementById("fromDate").value,
+        toDate: document.getElementById("toDate").value
+    };
+
+    await fetch("/api/apply", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    alert("Leave Applied!");
+}
+
+async function load() {
+    const name = document.getElementById("name").value;
+
+    const res = await fetch("/api/leaves");
+    const data = await res.json();
+
+    let html = "";
+
+    data.forEach(l => {
+        if (l.name === name) {
+            html += `<p>${l.reason} - ${l.status}</p>`;
+        }
+    });
+
+    document.getElementById("list").innerHTML = html;
+}
+
+</script>
+
+</body>
+</html>
