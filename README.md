@@ -3,8 +3,8 @@
 A simple and user-friendly web application that allows students to apply for leave and teachers to manage those requests efficiently.
 
 🔗 **Live Demo:** https://leave-management-system-rr13.onrender.com/
- ✨ Features
-
+ 
+ Features:
 👩‍🎓 Student Panel
 
 * Apply for leave easily
@@ -41,17 +41,27 @@ Data will reset when the server restarts.
 
  Screenshot
  #Login pannel
+ 
 <img width="1813" height="908" alt="image" src="https://github.com/user-attachments/assets/1c04989a-89dd-4f36-ada2-71f27e975b48" />
-#student pannel to apply leave
+
+#Student pannel to apply leave
+
 <img width="917" height="832" alt="image" src="https://github.com/user-attachments/assets/388a1bfc-d959-44a1-92fd-ed810be3d203" />
-#alert box appears after applying leave
+
+#Alert box appears after applying leave
+
 <img width="1488" height="962" alt="image" src="https://github.com/user-attachments/assets/04fdc801-46dd-4e9c-8e9a-d72f9dd069f2" />
+
 #Teacher can either approve or reject in teacher pannel
+
 <img width="953" height="573" alt="image" src="https://github.com/user-attachments/assets/2766daf1-e8a8-4fc2-bd29-ced482632e5e" />
-#student can view thier status in student pannel
+
+#Student can view thier status in student pannel
+
 <img width="942" height="851" alt="image" src="https://github.com/user-attachments/assets/a479c5cc-dfbb-4c7b-88f3-f4c68a87430a" />
 
 Beginner Friendly
+
 This is my **first project as a beginner in web development**, and it is open for learning and improvements.
 
 🤝 Contributing
