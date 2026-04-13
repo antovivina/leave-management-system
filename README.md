@@ -38,8 +38,7 @@ This project currently uses a **lightweight in-memory storage approach** for dem
 Data will reset when the server restarts.
 
 🔜 The system is designed to be extended with **MongoDB** for permanent data storage.
-
- Screenshot
+Demo Shots
  #Login pannel
  
 <img width="1813" height="908" alt="image" src="https://github.com/user-attachments/assets/1c04989a-89dd-4f36-ada2-71f27e975b48" />
